@@ -1,0 +1,239 @@
+/* ==========================================================================
+   PERSONAL CHESS APP - THEME SYSTEM
+   Based on Design Guidelines:
+   - Primary:   #10B981 (Emerald)
+   - Secondary: #F59E0B (Amber)
+   - Tertiary:  #6366F1 (Indigo)
+   - Neutral:   #0F1117 (Dark Charcoal / Slate Canvas)
+   - Fonts:     Space Grotesk (Headline), Plus Jakarta Sans (Body), JetBrains Mono (Label)
+   ========================================================================== */
+
+/* 1. Tailwind CSS v4 Theme Definitions */
+@theme {
+    /* Fonts */
+    --font-headline: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-label: 'JetBrains Mono', ui-monospace, monospace;
+    --font-sans: var(--font-body);
+    --font-mono: var(--font-label);
+
+    /* Primary Color Palette (#10B981) */
+    --color-primary: #10B981;
+    --color-primary-50: #b7f4d2;
+    --color-primary-100: #6bf1b6;
+    --color-primary-200: #4cd59d;
+    --color-primary-300: #26bb84;
+    --color-primary-400: #049c6d;
+    --color-primary-500: #10B981;
+    --color-primary-600: #059669;
+    --color-primary-700: #047857;
+    --color-primary-800: #025036;
+    --color-primary-900: #023522;
+    --color-primary-950: #011f13;
+
+    /* Secondary Color Palette (#F59E0B) */
+    --color-secondary: #F59E0B;
+    --color-secondary-50: #fef3c7;
+    --color-secondary-100: #f5d2b2;
+    --color-secondary-200: #f2b15f;
+    --color-secondary-300: #e69100;
+    --color-secondary-400: #c07d08;
+    --color-secondary-500: #F59E0B;
+    --color-secondary-600: #d97706;
+    --color-secondary-700: #b45309;
+    --color-secondary-800: #92400e;
+    --color-secondary-900: #78350f;
+    --color-secondary-950: #451a03;
+
+    /* Tertiary Color Palette (#6366F1) */
+    --color-tertiary: #6366F1;
+    --color-tertiary-50: #eef2ff;
+    --color-tertiary-100: #d9d5f6;
+    --color-tertiary-200: #b9b8f2;
+    --color-tertiary-300: #989ef4;
+    --color-tertiary-400: #7c7ef7;
+    --color-tertiary-500: #6366F1;
+    --color-tertiary-600: #4f46e5;
+    --color-tertiary-700: #4338ca;
+    --color-tertiary-800: #3730a3;
+    --color-tertiary-900: #09026c;
+    --color-tertiary-950: #05013b;
+
+    /* Neutral Color Palette (#0F1117) */
+    --color-neutral: #0F1117;
+    --color-neutral-50: #f8fafc;
+    --color-neutral-100: #e6e6f0;
+    --color-neutral-200: #d8d8e0;
+    --color-neutral-300: #bdbdc5;
+    --color-neutral-400: #a4a4ac;
+    --color-neutral-500: #898991;
+    --color-neutral-600: #595961;
+    --color-neutral-700: #45454d;
+    --color-neutral-800: #2f3035;
+    --color-neutral-850: #262632;
+    --color-neutral-900: #1e1e26;
+    --color-neutral-950: #0f1117;
+
+    /* Danger / Action Palette (Red/Pink from action icons) */
+    --color-danger: #F43F5E;
+    --color-danger-50: #fff1f2;
+    --color-danger-100: #ffe4e6;
+    --color-danger-200: #fecdd3;
+    --color-danger-300: #fda4af;
+    --color-danger-400: #fb7185;
+    --color-danger-500: #f43f5e;
+    --color-danger-600: #e11d48;
+    --color-danger-700: #be123c;
+    --color-danger-800: #9f1239;
+    --color-danger-900: #881337;
+    --color-danger-950: #4c0519;
+
+    /* Semantic Surface & Theme Aliases */
+    --color-canvas: #0F1117;
+    --color-surface: #1E1E26;
+    --color-surface-elevated: #262632;
+    --color-surface-hover: #2B2B38;
+    --color-border: #2E2E3A;
+    --color-border-subtle: #23232C;
+    --color-border-strong: #424250;
+
+    /* Radius Tokens */
+    --radius-card: 1rem;
+    --radius-btn: 0.5rem;
+    --radius-input: 0.75rem;
+}
+
+/* 3. Base Styles */
+:root {
+    color-scheme: dark;
+}
+
+body {
+    background-color: var(--color-canvas);
+    color: var(--color-neutral-100);
+    font-family: var(--font-body);
+}
+
+/* 4. Design System Component Presets */
+@layer components {
+    /* Button Variants */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.25rem;
+        border-radius: var(--radius-btn);
+        font-family: var(--font-headline);
+        font-weight: 600;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        transition: all 0.15s ease-in-out;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background-color: var(--color-primary);
+        color: var(--color-neutral-950);
+        border: 1px solid transparent;
+    }
+    .btn-primary:hover {
+        background-color: var(--color-primary-100);
+    }
+
+    .btn-secondary {
+        background-color: var(--color-surface);
+        color: var(--color-neutral-100);
+        border: 1px solid var(--color-border);
+    }
+    .btn-secondary:hover {
+        background-color: var(--color-surface-elevated);
+        border-color: var(--color-border-strong);
+    }
+
+    .btn-inverted {
+        background-color: var(--color-neutral-100);
+        color: var(--color-neutral-950);
+        border: 1px solid transparent;
+    }
+    .btn-inverted:hover {
+        background-color: #ffffff;
+    }
+
+    .btn-outlined {
+        background-color: transparent;
+        color: var(--color-neutral-100);
+        border: 1px solid var(--color-neutral-600);
+    }
+    .btn-outlined:hover {
+        border-color: var(--color-neutral-300);
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Card Surfaces */
+    .card-surface {
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-card);
+        padding: 1.5rem;
+    }
+
+    /* Search & Form Inputs */
+    .input-search {
+        width: 100%;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-input);
+        padding: 0.625rem 1rem 0.625rem 2.5rem;
+        color: var(--color-neutral-100);
+        font-family: var(--font-label);
+        font-size: 0.875rem;
+        transition: border-color 0.15s ease;
+    }
+    .input-search:focus {
+        outline: none;
+        border-color: var(--color-primary);
+    }
+    .input-search::placeholder {
+        color: var(--color-neutral-500);
+    }
+
+    /* Badges & Pills */
+    .badge-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        background-color: var(--color-primary);
+        color: var(--color-neutral-950);
+        font-family: var(--font-label);
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    /* Circular Floating Action Buttons */
+    .action-circle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 9999px;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .action-circle:hover {
+        transform: scale(1.05);
+        opacity: 0.95;
+    }
+
+    /* Hide scrollbar while keeping scroll functionality */
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+}
