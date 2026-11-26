@@ -5,7 +5,10 @@
     'value' => '',
 ])
 
-<div class="w-full bg-canvas border border-border rounded-xl p-1.5 pl-3.5 flex items-center gap-2.5 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/40 transition-colors">
+<div
+    data-lookup-box
+    class="w-full bg-canvas border border-border rounded-xl p-1.5 pl-3.5 flex items-center gap-2.5 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/40 transition-colors"
+>
     <!-- Platform Emblem Icon -->
     <span class="shrink-0 flex items-center justify-center" data-platform-icon>
         <!-- Chess.com Pawn Icon (default) -->
@@ -26,18 +29,25 @@
         type="text"
         name="{{ $name }}"
         id="{{ $id }}"
-        value="{{ $value }}"
+        value="{{ old($name, $value) }}"
         placeholder="{{ $placeholder }}"
         autocomplete="off"
+        data-username-input
         class="flex-1 min-w-0 bg-transparent text-sm text-neutral-100 placeholder:text-neutral-500 font-label focus:outline-none"
     >
 
     <!-- Inline Check Button -->
     <button
         type="button"
-        class="px-3.5 py-2 rounded-lg bg-primary-200 hover:bg-primary-100 active:scale-[0.98] text-neutral-950 font-headline font-bold text-xs flex items-center gap-1.5 shrink-0 transition-all cursor-pointer"
+        data-check-btn
+        class="px-3.5 py-2 rounded-lg bg-primary-200 hover:bg-primary-100 active:scale-[0.98] disabled:opacity-60 disabled:cursor-wait text-neutral-950 font-headline font-bold text-xs flex items-center gap-1.5 shrink-0 transition-all cursor-pointer"
     >
-        <x-lucide-search class="w-3.5 h-3.5 stroke-[2.5]" />
-        <span>Check</span>
+        <span data-check-icon class="flex items-center">
+            <x-lucide-search class="w-3.5 h-3.5 stroke-[2.5]" />
+        </span>
+        <span data-check-spinner class="hidden items-center">
+            <x-lucide-loader-circle class="w-3.5 h-3.5 animate-spin stroke-[2.5]" />
+        </span>
+        <span data-check-label>Check</span>
     </button>
 </div>

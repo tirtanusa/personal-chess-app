@@ -5,7 +5,7 @@
 
         <!-- Register Form Card -->
         <div class="w-full bg-surface border border-border-subtle rounded-2xl p-6 shadow-2xl flex flex-col gap-5">
-            <form action="#" method="POST" class="flex flex-col gap-5" onsubmit="event.preventDefault()">
+            <form action="{{ route('register') }}" method="POST" class="flex flex-col gap-5">
                 @csrf
 
                 <!-- Email Address -->
@@ -62,13 +62,19 @@
                 />
 
                 <!-- Terms Agreement Checkbox -->
-                <x-ui.checkbox name="terms">
-                    I agree to the
-                    <a href="#" class="text-primary hover:text-primary-200 hover:underline transition-colors">Terms of Service</a>
-                    and
-                    <a href="#" class="text-primary hover:text-primary-200 hover:underline transition-colors">Privacy Policy</a>
-                    of Gambit Chess.
-                </x-ui.checkbox>
+                <div class="flex flex-col gap-1.5">
+                    <x-ui.checkbox name="terms" :checked="(bool) old('terms')">
+                        I agree to the
+                        <a href="#" class="text-primary hover:text-primary-200 hover:underline transition-colors">Terms of Service</a>
+                        and
+                        <a href="#" class="text-primary hover:text-primary-200 hover:underline transition-colors">Privacy Policy</a>
+                        of Gambit Chess.
+                    </x-ui.checkbox>
+
+                    @error('terms')
+                        <p class="text-[11px] text-danger-400 font-body">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <!-- Primary Submit CTA -->
                 <button

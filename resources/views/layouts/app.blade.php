@@ -18,6 +18,10 @@
         :variant="$headerVariant ?? 'default'"
         :page-title="$headerTitle ?? ''"
         :back-url="$backUrl ?? null"
+        :avatar-url="$avatarUrl ?? null"
+        :profile-name="$profileName ?? 'Alexey V.'"
+        :profile-handle="$profileHandle ?? '@alexey_v'"
+        :profile-rating="$profileRating ?? '1842'"
     />
 
     <main @class([

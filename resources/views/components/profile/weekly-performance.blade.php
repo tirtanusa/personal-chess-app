@@ -1,12 +1,19 @@
+@props([
+    'weekly' => null,
+])
+
 @php
-    $days = [
-        ['label' => 'MON', 'active' => false],
-        ['label' => 'TUE', 'active' => false],
-        ['label' => 'WED', 'active' => false],
-        ['label' => 'THU', 'active' => false],
-        ['label' => 'FRI', 'active' => false],
-        ['label' => 'SAT', 'active' => true],
-        ['label' => 'SUN', 'active' => false],
+    $data = $weekly ?? [
+        'modeLabel' => 'Blitz',
+        'netLabel' => 'No games (7D)',
+        'netClass' => 'text-neutral-500',
+        'days' => collect(['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'])
+            ->map(fn (string $label): array => ['label' => $label, 'active' => false, 'isToday' => false])
+            ->all(),
+        'linePath' => 'M 20 56 L 342 56',
+        'areaPath' => 'M 20 56 L 342 56 L 342 84 L 20 84 Z',
+        'dots' => [],
+        'hasCurve' => false,
     ];
 @endphp
 
@@ -17,7 +24,9 @@
             <x-lucide-trending-up class="w-4 h-4 text-primary" />
             <h3 class="font-headline text-base font-bold text-white">Last 7 Days Performance</h3>
         </div>
-        <span class="font-label text-xs font-bold text-primary">+38 ELO Net</span>
+        <span class="font-label text-xs font-bold {{ $data['netClass'] }}">
+            {{ $data['netLabel'] }}
+        </span>
     </div>
 
     <!-- 7-Day Glowing Curve -->
@@ -39,36 +48,44 @@
 
             <!-- Area Fill -->
             <path
-                d="M 20 56 C 42 54, 54 38, 74 38 C 94 38, 106 72, 128 72 C 150 72, 162 34, 182 34 C 202 34, 214 54, 236 54 C 258 54, 268 18, 290 18 C 312 18, 324 44, 342 44 L 342 84 L 20 84 Z"
+                d="{{ $data['areaPath'] }}"
                 fill="url(#weeklyAreaGradient)"
+                @class(['opacity-0' => ! $data['hasCurve']])
             />
 
             <!-- Glowing Line -->
             <path
-                d="M 20 56 C 42 54, 54 38, 74 38 C 94 38, 106 72, 128 72 C 150 72, 162 34, 182 34 C 202 34, 214 54, 236 54 C 258 54, 268 18, 290 18 C 312 18, 324 44, 342 44"
+                d="{{ $data['linePath'] }}"
                 fill="none"
                 stroke="#4CD59D"
                 stroke-width="2.5"
                 stroke-linecap="round"
-                filter="url(#weeklyGlow)"
+                @if ($data['hasCurve']) filter="url(#weeklyGlow)" @else stroke-dasharray="4 4" opacity="0.35" @endif
             />
 
             <!-- Day Nodes -->
-            <circle cx="20" cy="56" r="3.5" fill="#0F1117" stroke="#4CD59D" stroke-width="2" />
-            <circle cx="74" cy="38" r="3.5" fill="#0F1117" stroke="#4CD59D" stroke-width="2" />
-            <circle cx="128" cy="72" r="3.5" fill="#0F1117" stroke="#F43F5E" stroke-width="2" />
-            <circle cx="182" cy="34" r="3.5" fill="#0F1117" stroke="#4CD59D" stroke-width="2" />
-            <circle cx="236" cy="54" r="3.5" fill="#0F1117" stroke="#F59E0B" stroke-width="2" />
-            <circle cx="290" cy="18" r="4.5" fill="#6BF1B6" stroke="#10B981" stroke-width="2" />
-            <circle cx="342" cy="44" r="3.5" fill="#0F1117" stroke="#4CD59D" stroke-width="2" />
+            @foreach ($data['dots'] as $dot)
+                <circle
+                    cx="{{ $dot['cx'] }}"
+                    cy="{{ $dot['cy'] }}"
+                    r="{{ $dot['isHighlight'] ? '4.5' : '3.5' }}"
+                    fill="{{ $dot['isHighlight'] ? '#6BF1B6' : '#0F1117' }}"
+                    stroke="{{ $dot['stroke'] }}"
+                    stroke-width="2"
+                >
+                    @if (! empty($dot['title']))
+                        <title>{{ $dot['title'] }}</title>
+                    @endif
+                </circle>
+            @endforeach
         </svg>
 
         <!-- Day Axis Labels -->
         <div class="grid grid-cols-7 text-center pt-1 font-label text-[10px]">
-            @foreach ($days as $day)
+            @foreach ($data['days'] as $day)
                 <span @class([
-                    'text-primary font-bold' => $day['active'],
-                    'text-neutral-500' => ! $day['active'],
+                    'text-primary font-bold' => $day['active'] || $day['isToday'],
+                    'text-neutral-500' => ! $day['active'] && ! $day['isToday'],
                 ])>
                     {{ $day['label'] }}
                 </span>

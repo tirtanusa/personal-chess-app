@@ -13,6 +13,8 @@
 
 @php
     $inputId = $id ?? ($name ?: \Illuminate\Support\Str::slug($label) . '-' . uniqid());
+    $hasError = isset($errors) && $name !== '' && $errors->has($name);
+    $resolvedValue = $type === 'password' ? '' : ($name !== '' ? old($name, $value) : $value);
 @endphp
 
 <div class="flex flex-col gap-2">
@@ -45,10 +47,11 @@
             type="{{ $type }}"
             name="{{ $name }}"
             id="{{ $inputId }}"
-            value="{{ $value }}"
+            value="{{ $resolvedValue }}"
             placeholder="{{ $placeholder }}"
             {{ $attributes->merge([
-                'class' => 'w-full bg-canvas border border-border rounded-xl py-3 text-sm text-neutral-100 placeholder:text-neutral-500 font-body focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors ' .
+                'class' => 'w-full bg-canvas border rounded-xl py-3 text-sm text-neutral-100 placeholder:text-neutral-500 font-body focus:outline-none focus:ring-1 transition-colors ' .
+                    ($hasError ? 'border-danger-400 focus:border-danger-400 focus:ring-danger-400/40 ' : 'border-border focus:border-primary focus:ring-primary/40 ') .
                     ($icon ? 'pl-10 ' : 'pl-4 ') .
                     ($passwordToggle ? 'pr-11' : 'pr-4'),
             ]) }}
@@ -76,6 +79,12 @@
             </button>
         @endif
     </div>
+
+    @if ($hasError)
+        <p class="text-[11px] text-danger-400 font-body">
+            {{ $errors->first($name) }}
+        </p>
+    @endif
 
     {{ $slot }}
 </div>

@@ -38,9 +38,9 @@
 
     <!-- Main Centered Content -->
     <main @class([
-        'relative z-10 flex-1 flex flex-col items-center w-full max-w-[460px] mx-auto px-5 pb-10',
-        'justify-center pt-2' => $centered,
-        'justify-start pt-6' => ! $centered,
+        'relative z-10 flex-1 flex flex-col items-center w-full max-w-[460px] mx-auto px-5',
+        'justify-center pt-2 pb-14' => $centered,
+        'justify-start pt-6 pb-10' => ! $centered,
     ])>
         {{ $slot }}
     </main>

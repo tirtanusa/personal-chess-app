@@ -5,7 +5,14 @@
 
         <!-- Login Form Card -->
         <div class="w-full bg-surface border border-border-subtle rounded-2xl p-6 shadow-2xl flex flex-col gap-5">
-            <form action="#" method="POST" class="flex flex-col gap-5" onsubmit="event.preventDefault()">
+            @if (session('status'))
+                <div class="bg-primary/10 border border-primary/30 rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 text-xs text-primary font-body">
+                    <x-lucide-circle-check class="w-4 h-4 shrink-0" />
+                    <span>{{ session('status') }}</span>
+                </div>
+            @endif
+
+            <form action="{{ route('login') }}" method="POST" class="flex flex-col gap-5">
                 @csrf
 
                 <!-- Email / Chess Username -->
@@ -37,7 +44,7 @@
                     <x-ui.checkbox
                         name="remember"
                         label="Remember me"
-                        :checked="true"
+                        :checked="(bool) old('remember', true)"
                     />
 
                     <a href="#" class="text-xs font-medium text-primary hover:text-primary-200 hover:underline transition-colors">

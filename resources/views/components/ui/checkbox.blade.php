@@ -1,6 +1,7 @@
 @props([
     'name' => 'remember',
     'id' => null,
+    'value' => '1',
     'label' => '',
     'checked' => false,
 ])
@@ -15,6 +16,7 @@
             type="checkbox"
             name="{{ $name }}"
             id="{{ $checkboxId }}"
+            value="{{ $value }}"
             @checked($checked)
             class="peer sr-only"
         >

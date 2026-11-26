@@ -1,6 +1,9 @@
 @props([
     'brand' => 'Gambit',
     'avatarUrl' => null,
+    'profileName' => 'Alexey V.',
+    'profileHandle' => '@alexey_v',
+    'profileRating' => '1842',
     'variant' => 'default',
     'pageTitle' => '',
     'backUrl' => null,
@@ -44,20 +47,13 @@
                 </span>
             </a>
 
-            <!-- User Avatar -->
-            <a
-                href="{{ route('profile') }}"
-                class="w-9 h-9 rounded-full p-0.5 bg-gradient-to-tr from-primary/60 via-secondary/40 to-tertiary/50 hover:scale-105 transition-transform"
-                aria-label="User Profile"
-            >
-                <div class="w-full h-full rounded-full bg-surface-elevated overflow-hidden flex items-center justify-center">
-                    @if ($avatarUrl)
-                        <img src="{{ $avatarUrl }}" alt="Avatar" class="w-full h-full object-cover">
-                    @else
-                        <x-lucide-user class="w-4 h-4 text-neutral-200" />
-                    @endif
-                </div>
-            </a>
+            <!-- User Profile Dropdown -->
+            <x-navigation.profile-dropdown
+                :avatar-url="$avatarUrl"
+                :name="$profileName"
+                :handle="$profileHandle"
+                :rating="$profileRating"
+            />
         @endif
     </div>
 </header>
